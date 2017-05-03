@@ -26,11 +26,7 @@ cj(function($) {
         // When an express payment button is clicked, skip the billing fields and submit the form with a placeholder
         var $expressButton = $('input[name$=_upload_express]', '#billing-payment-block');
         if ($expressButton.length) {
-          $expressButton.removeClass('crm-form-submit').click(function(e) {
-            e.preventDefault();
-            $('input[name=credit_card_number]', '#billing-payment-block').val('express');
-            $(this).closest('form').find('input.webform-submit.button-primary').click();
-          })
+            $('#billing-payment-block .description').hide();
         }
       });
     }
@@ -50,7 +46,7 @@ cj(function($) {
 
   function tally() {
     var total = 0;
-    $('.line-item:visible', '#wf-crm-billing-items').each(function() {
+    $("#wf-crm-billing-items tr:not(#wf-crm-billing-total)").each(function() {
       total += parseFloat($(this).data('amount'));
     });
     $('td+td', '#wf-crm-billing-total').html(CRM.formatMoney(total));

@@ -32,6 +32,8 @@ abstract class wf_crm_webform_base {
   // tax integration
   private $_tax_rate;
 
+  private $_civicrm_version;
+
   /**
    * Magic method to retrieve otherwise inaccessible properties
    * @param $name
@@ -68,6 +70,13 @@ abstract class wf_crm_webform_base {
 
       case 'civicrm_version':
         return CRM_Utils_System::version();
+
+      case 'civicrm_version':
+        if (!$this->_civicrm_version) {
+          $civicrm = system_get_info('module', 'civicrm');
+          $this->_civicrm_version = $civicrm['version'];
+        }
+        return $this->_civicrm_version;
 
       default:
         throw new Exception('Unknown property');
